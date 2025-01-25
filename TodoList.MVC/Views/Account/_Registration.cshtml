@@ -1,0 +1,62 @@
+﻿@using TodoList.MVC.Models.Account;
+@model RegistrationViewModel
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form" }))
+{
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fa-solid fa-user"></i>
+            </span>
+            <div class="form-floating">
+                @Html.TextBoxFor(m => m.Login, new
+                    {
+                        @class = "form-control",
+                        placeholder = "Enter Login"
+                    })
+                @Html.LabelFor(m => m.Login, "Login", new { @class = "form-label" })
+            </div>
+        </div>
+        @Html.ValidationMessageFor(m => m.Login, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fa-solid fa-lock"></i>
+            </span>
+            <div class="form-floating">
+                @Html.PasswordFor(m => m.Password, new
+                    {
+                        @class = "form-control",
+                        placeholder = "Enter Password"
+                    })
+                @Html.LabelFor(m => m.Password, "Password", new { @class = "form-label" })
+            </div>
+        </div>
+        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fa-solid fa-lock"></i>
+            </span>
+            <div class="form-floating">
+                @Html.PasswordFor(m => m.RepeatPassword, new
+                    {
+                        @class = "form-control",
+                        placeholder = "Enter Repeat Password"
+                    })
+                @Html.LabelFor(m => m.RepeatPassword, "Repeat Password", new { @class = "form-label" })
+            </div>
+        </div>
+        @Html.ValidationMessageFor(m => m.RepeatPassword, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="text-danger mb-2">
+        @ViewBag.RegisterError
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Create account</button>
+}

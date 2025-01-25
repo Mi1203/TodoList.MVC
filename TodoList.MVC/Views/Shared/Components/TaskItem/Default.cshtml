@@ -1,0 +1,68 @@
+﻿@using TodoList.Domain.Entities
+@model TaskApp
+
+@{
+    var timeLeft = Model.ExpiredDate - DateTime.Now;
+    var isShowTimeLeft = timeLeft <= TimeSpan.FromHours(4) && timeLeft.TotalSeconds > 0;
+}
+
+@functions {
+    string timeLeftToFormat(TimeSpan timeLeft)
+    {
+        return $"{timeLeft.Hours:D2}:{timeLeft.Minutes:D2}";
+    }
+}
+
+<div class="task shadow-sm p-3 mb-5 bg-body-tertiary rounded d-flex justify-content-between align-items-center" data-id="@Model.Id">
+    <div class="form-check d-flex align-items-center">
+        @using (Html.BeginForm("UpdateCompleted", "Home", FormMethod.Post, new { name = "updateCompletedForm" }))
+        {
+            @Html.HiddenFor(m => m.Id)
+            @Html.CheckBoxFor(m => m.IsCompleted, new { onclick = "document.updateCompletedForm.submit()", @class = "form-check-input me-5", style = "height: 25px; width: 25px;", id = "IsCompleted-" + Model.Id })
+        }
+
+        @using (Html.BeginForm("UpdateName", "Home", FormMethod.Post))
+        {
+            <div class="editable-group d-flex align-items-center d-none">
+                @Html.HiddenFor(m => m.Id)
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", id = "Name-" + Model.Id })
+                <div class="btn-group ms-2" role="group">
+                    <button type="submit" class="btn btn-outline-success save" data-bs-title="Save" data-bs-toggle="tooltip">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger cancel" data-bs-title="Back" data-bs-toggle="tooltip">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+        }
+
+        <label class="form-check-label" for="IsCompleted-@Model.Id">@Model.Name</label>
+        <span class="text-bg-warning ms-lg-5 @(!isShowTimeLeft ? "d-none" : "")" data-bs-title="Time Left" data-bs-toggle="tooltip">
+            <i class="fa-solid fa-hourglass-half me-2"></i> @timeLeftToFormat(timeLeft)
+        </span>
+    </div>
+
+    <div>
+        <div class="d-flex align-items-center">
+            <button class="btn text-secondary edit" data-bs-title="Edit" data-bs-toggle="tooltip">
+                <i class="fa-solid fa-pencil"></i>
+            </button>
+            @using (Html.BeginForm("Delete", "Home", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.Id)
+                <button type="submit" class="btn text-danger" data-bs-title="Delete" data-bs-toggle="tooltip">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            }
+        </div>
+
+        <div data-bs-placement="bottom"
+             data-bs-title="@Model.ExpiredDate"
+             data-bs-toggle="tooltip"
+             class="text-secondary d-flex align-items-center">
+            <i class="fa-solid fa-clock me-2"></i>
+            @Model.ExpiredDate.ToString("dd.MM.yyyy")
+        </div>
+    </div>
+</div>
