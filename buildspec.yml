@@ -17,7 +17,7 @@ phases:
       - dotnet test TodoList.Tests --logger "trx;LogFileName=test_results.trx"  # Запуск тестів
   post_build:
     commands:
-      - echo "Post-build phase: Packaging the application..."
+      - echo "Post-build phase Packaging the application..."
       - dotnet publish TodoList.MVC --configuration Release --output ./publish  # Публікація артефактів
 artifacts:
   files:
