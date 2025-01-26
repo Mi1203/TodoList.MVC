@@ -8,7 +8,7 @@ phases:
       - dotnet restore  # Встановлення залежностей
   pre_build:
     commands:
-      - echo "Pre-build phase: Preparing for tests..."
+      - echo "phase Preparing for tests..."
   build:
     commands:
       - echo "Building the project..."
