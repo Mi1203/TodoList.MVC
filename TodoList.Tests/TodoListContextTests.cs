@@ -12,7 +12,7 @@ namespace TodoList.Tests
         private TodoListContext GetInMemoryDbContext()
         {
             var options = new DbContextOptionsBuilder<TodoListContext>()
-                .UseInMemoryDatabase(databaseName: "TodoListTestDb")
+                .UseInMemoryDatabase(databaseName: "TodoListTestDb1")
                 .Options;
 
             return new TodoListContext(options);
