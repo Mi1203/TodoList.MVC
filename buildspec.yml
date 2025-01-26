@@ -5,26 +5,26 @@ phases:
       dotnet: 8.0
     commands:
       - echo "Installing dependencies..."
-      - dotnet restore  # Встановлення залежностей
+      - dotnet restore  # Installing dependencies
   pre_build:
     commands:
       - echo "phase Preparing for tests..."
   build:
     commands:
       - echo "Building the project..."
-      - dotnet build TodoList.MVC --configuration Release  # Збірка основного проєкту
+      - dotnet build TodoList.MVC --configuration Release  # build main proj
       - echo "Running NUnit tests..."
-      - dotnet test TodoList.Tests --logger "trx;LogFileName=test_results.trx"  # Запуск тестів
+      - dotnet test TodoList.Tests --logger "trx;LogFileName=test_results.trx"  # run tests
   post_build:
     commands:
       - echo "Post-build phase Packaging the application..."
-      - dotnet publish TodoList.MVC --configuration Release --output ./publish  # Публікація артефактів
+      - dotnet publish TodoList.MVC --configuration Release --output ./publish  # publish artifacts
 artifacts:
   files:
-    - publish/**/*  # Всі файли для деплою
-  base-directory: ./  # Базова директорія для артефактів
+    - publish/**/*  # all files for deploy
+  base-directory: ./  # base directory for deploy
 reports:
   test_reports:
     files:
-      - test_results.trx  # Лог тестів NUnit
-    base-directory: ./  # Базова директорія для логів тестів
+      - test_results.trx  # NUnit tests logs
+    base-directory: ./  # base dorectory for logs
