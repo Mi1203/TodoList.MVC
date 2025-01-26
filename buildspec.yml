@@ -2,29 +2,29 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      dotnet: 8.0  #  .NET
+      dotnet: 8.0  # Використовуємо правильну версію .NET
     commands:
       - echo Installing dependencies...
-      - dotnet restore  # 
+      - dotnet restore  # Встановлення залежностей
   pre_build:
     commands:
       - echo Pre-build phase: Preparing for tests...
   build:
     commands:
       - echo Building the project...
-      - dotnet build TodoList.MVC --configuration Release  #
+      - dotnet build TodoList.MVC --configuration Release  # Збірка основного проєкту
       - echo Running NUnit tests...
-      - dotnet test TodoList.Tests --logger "trx;LogFileName=test_results.trx"  # 
+      - dotnet test TodoList.Tests --logger "trx;LogFileName=test_results.trx"  # Запуск тестів
   post_build:
     commands:
       - echo Post-build phase: Packaging the application...
-      - dotnet publish TodoList.MVC --configuration Release --output ./publish  #
+      - dotnet publish TodoList.MVC --configuration Release --output ./publish  # Публікація артефактів
 artifacts:
   files:
-    - publish/**/*  # 
-  base-directory: ./  # 
+    - publish/**/*  # Всі файли для деплою
+  base-directory: ./  # Базова директорія для артефактів
 reports:
   test_reports:
     files:
-      - test_results.trx  # 
-    base-directory: ./  #
+      - test_results.trx  # Лог тестів NUnit
+    base-directory: ./  # Базова директорія для логів тестів
